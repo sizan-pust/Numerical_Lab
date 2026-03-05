@@ -1,66 +1,41 @@
-#include <iostream>
-#include <cmath>
+// Curve Fitting of a quadratic curve parabola using Least Squares Method
+#include <bits/stdc++.h>
 using namespace std;
 
 int main() {
+
     int n;
-    cout << "Enter number of data points: ";
+    cout << "Enter number of points: ";
     cin >> n;
 
-    double x[n], y[n][n];
+    double x, y;
+    double sx=0, sy=0, sx2=0, sx3=0, sx4=0, sxy=0, sx2y=0;
 
     cout << "Enter x and y values:\n";
-    for(int i = 0; i < n; i++) {
-        cin >> x[i] >> y[i][0];
+
+    for(int i=0;i<n;i++){
+        cin >> x >> y;
+
+        sx += x;
+        sy += y;
+        sx2 += x*x;
+        sx3 += x*x*x;
+        sx4 += x*x*x*x;
+        sxy += x*y;
+        sx2y += x*x*y;
     }
 
-    double value;
-    cout << "Enter the value of x where derivative is needed: ";
-    cin >> value;
+    double D = n*(sx2*sx4 - sx3*sx3) - sx*(sx*sx4 - sx2*sx3) + sx2*(sx*sx3 - sx2*sx2);
 
-    double h = x[1] - x[0];
-    double u = (value - x[0]) / h;
-    for(int j = 1; j < n; j++) {
-        for(int i = 0; i < n - j; i++) {
-            y[i][j] = y[i+1][j-1] - y[i][j-1];
-        }
-    }
+    double Da = sy*(sx2*sx4 - sx3*sx3) - sx*(sxy*sx4 - sx3*sx2y) + sx2*(sxy*sx3 - sx2*sx2y);
+    double Db = n*(sxy*sx4 - sx3*sx2y) - sy*(sx*sx4 - sx2*sx3) + sx2*(sx*sx2y - sxy*sx2);
+    double Dc = n*(sx2*sx2y - sxy*sx3) - sx*(sx*sx2y - sxy*sx2) + sy*(sx*sx3 - sx2*sx2);
 
-    cout << "\nForward Difference Table:\n";
-    for(int i = 0; i < n; i++) {
-        for(int j = 0; j < n - i; j++) {
-            cout << y[i][j] << "\t";
-        }
-        cout << endl;
-    }
-
-    double first = 0, second = 0, third = 0;
-
-    if(n >= 2)
-        first += y[0][1];
-
- if(n >= 3)
-        first += ((2*u - 1)/2.0) * y[0][2];
-
-    if(n >= 4)
-        first += ((3*u*u - 6*u + 2)/6.0) * y[0][3];
-
-    first = first / h;
-
-    if(n >= 3)
-        second += y[0][2];
-
-    if(n >= 4)
-        second += (u - 1) * y[0][3];
-
-    second = second / (h*h);
-
-    if(n >= 4)
-        third = y[0][3] / (h*h*h);
-
-    cout << "\nFirst Derivative  = " << first << endl;
-    cout << "Second Derivative = " << second << endl;
-    cout << "Third Derivative  = " << third << endl;
+    double a = Da/D;
+    double b = Db/D;
+    double c = Dc/D;
+cout << fixed << setprecision(12);
+    cout << "\nCurve: y = " << a << " + " << b << "x + " << c << "x^2";
 
     return 0;
 }
