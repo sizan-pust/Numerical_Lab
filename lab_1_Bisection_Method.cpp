@@ -1,10 +1,11 @@
+//finding root using bisection method
 #include <iostream>
 #include <cmath>
 using namespace std;
 
 // Define the function here
 double f(double x) {
-    return x*x*x - x - 2;   // Example: x^3 - x - 2
+    return x*x*x - x - 2;   // predefined function Example: x^3 - x - 2
 }
 
 int main() {
@@ -28,13 +29,13 @@ int main() {
     cout << "\nIteration\t a\t\t b\t\t c\t\t f(c)\n";
 
     do {
-        c = (a * f(b) - b * f(a)) / (f(b) - f(a));
+        c = (a + b) / 2;
         iteration++;
 
         cout << iteration << "\t\t"
-             << a << "\t"
-             << b << "\t"
-             << c << "\t"
+             << a << "\t\t"
+             << b << "\t\t"
+             << c << "\t\t"
              << f(c) << endl;
 
         if (f(c) == 0.0)
