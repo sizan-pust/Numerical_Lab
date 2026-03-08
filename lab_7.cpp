@@ -1,3 +1,4 @@
+// newton's forward difference method for numerical differentiation
 #include <iostream>
 #include <cmath>
 using namespace std;
