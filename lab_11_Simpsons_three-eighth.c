@@ -1,4 +1,4 @@
-// Simpson's one-third rule for numerical integration of log (x)
+// Simpson's three-eighth rule for numerical integration of log (x)
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -10,7 +10,7 @@ double f(double x)
 
 int main()
 {
-    printf("==Simpson one-third===\n");
+    printf("============Simpson three-eight==============\n");
 
     double a, b, h, sum, integral;
     int n, i;
@@ -21,9 +21,9 @@ int main()
     printf("Enter number of intervals: ");
     scanf("%d", &n);
 
-    if (n % 2 != 0)
+    if (n % 3 != 0)
     {
-        printf("Interval must be even number.");
+        printf("Interval must be odd number.");
         return 1;
     }
 
@@ -32,12 +32,12 @@ int main()
     for (i = 1; i < n; i++)
     {
 
-        if (i % 2 == 0)
+        if (i % 3 == 0)
             sum += 2 * f(a + i * h);
         else
-            sum += 4 * f(a + i * h);
+            sum += 3 * f(a + i * h);
     }
-    integral = (h / 3.0) * sum;
+    integral = (3.0 * h / 8.0) * sum;
 
     printf("=================================\n");
     printf("\n Step Size (h)   = %.7f\n", h);
