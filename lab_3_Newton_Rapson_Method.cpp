@@ -34,7 +34,7 @@ int main() {
         iteration++;
 
         cout << iteration << "\t\t"
-             << x1 << "\t"
+             << x1 << "\t\t"
              << f(x1) << endl;
 
         x0 = x1;
