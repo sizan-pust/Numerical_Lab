@@ -32,7 +32,7 @@ int main() {
         iteration++;
 
         cout << iteration << "\t\t"
-             << x2 << "\t"
+             << x2 << "\t\t"
              << f(x2) << endl;
 
         x0 = x1;
