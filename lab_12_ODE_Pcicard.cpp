@@ -76,7 +76,7 @@ int main() {
     }
 
     printf("\nFinal Approximation after %d iterations:\n", iterations);
-    printf("y(%.4f) â‰ˆ %.8f\n", xn, y[iterations][n]);
+    printf("y(%.4f) = %.8f\n", xn, y[iterations][n]);
 
     return 0;
 }

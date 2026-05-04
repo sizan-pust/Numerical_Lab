@@ -8,7 +8,7 @@ float f(float x, float y) {
 }
 
 int main() {
-    float x0, y0, h, xn, x, y;
+    float x0, y0, h, xn;
     int n, i;
 
     printf("\n=== Euler's Method for Solving ODE ===\n\n");
@@ -27,21 +27,18 @@ int main() {
 
     n = (xn - x0) / h ;   // Calculate number of steps
 
-    x = x0;
-    y = y0;
-
     printf("\n%-10s %-15s\n", "x", "y(x)");
     printf("-----------------------------------\n");
-    printf("%-10.4f %-15.6f\n", x, y);
+    printf("%-10.4f %-15.6f\n", x0, y0);
 
     for(i = 1; i <= n; i++) {
-        y = y + h * f(x, y);      // Euler's formula
-        x = x + h;
-        printf("%-10.4f %-15.6f\n", x, y);
+        y0 = y0 + h * f(x0, y0);      // Euler's formula
+        x0 = x0 + h;
+        printf("%-10.4f %-15.6f\n", x0, y0);
     }
 
     printf("-----------------------------------\n");
-    printf("Approximate value of y(%.4f) = %.8f\n", xn, y);
+    printf("Approximate value of y(%.4f) = %.8f\n", xn, y0);
 
     return 0;
 }
