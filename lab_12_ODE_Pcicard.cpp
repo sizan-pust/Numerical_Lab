@@ -1,75 +1,82 @@
-#include <iostream>
-#include <cmath>
-#include <iomanip>
-using namespace std;
+#include <stdio.h>
 
-// Given ODE: dy/dx = x - y
-double f(double x, double y) {
-    return x - y;
+// Change this function for your ODE
+float f(float x, float y) {
+    return x - y;                    // Example: dy/dx = x - y
+    // return 1 + y*y;               // dy/dx = 1 + yÂ² â†’ y = tan(x)
+    // return -2*x*y;                // dy/dx = -2xy
 }
 
 int main() {
+    float x0, y0, h, xn, x;
+    int n, iterations, i, j;
 
-    double x0, y0, x, tolerance;
+    printf("\n=== Picard's Iterative Method ===\n\n");
 
-    cout << "Enter x0: ";
-    cin >> x0;
+    printf("Enter x0 : ");
+    scanf("%f", &x0);
 
-    cout << "Enter y0: ";
-    cin >> y0;
+    printf("Enter y0 : ");
+    scanf("%f", &y0);
 
-    cout << "Enter value of x: ";
-    cin >> x;
+    printf("Enter step size (h)     : ");
+    scanf("%f", &h);
 
-    cout << "Enter tolerance: ";
-    cin >> tolerance;
+    printf("Enter final x (xn)      : ");
+    scanf("%f", &xn);
 
-    int n = 100; // number of steps for integration
-    double h = (x - x0) / n;
+    printf("Enter number of iterations : ");
+    scanf("%d", &iterations);
 
-    double t[n+1], y_prev[n+1], y_next[n+1];
+    n = (xn - x0) / h ;     // Number of steps
 
-    // Generate x values
-    for(int i = 0; i <= n; i++)
-        t[i] = x0 + i*h;
+    float y[iterations+1][n+1];         // y[iteration][point]
 
-    // Initial approximation y0(x) = constant
-    for(int i = 0; i <= n; i++)
-        y_prev[i] = y0;
-
-    cout << fixed << setprecision(6);
-
-    int iteration = 0;
-
-    while(true) {
-        iteration++;
-
-        for(int i = 0; i <= n; i++) {
-
-            double sum = 0;
-
-            // Trapezoidal Rule
-            for(int j = 0; j < i; j++) {
-                sum += (f(t[j], y_prev[j]) + f(t[j+1], y_prev[j+1])) / 2.0;
-            }
-
-            y_next[i] = y0 + h * sum;
-        }
-
-        cout << "Iteration " << iteration 
-             << " -> y(" << x << ") = " << y_next[n] << endl;
-
-        // Check stopping condition
-        if (fabs(y_next[n] - y_prev[n]) < tolerance)
-            break;
-
-        // Update
-        for(int i = 0; i <= n; i++)
-            y_prev[i] = y_next[i];
+    // Initialize first approximation: y0(x) = y0 (constant)
+    for(i = 0; i <= n; i++) {
+        y[0][i] = y0;
     }
 
-    cout << "\nFinal Answer = " << y_next[n] << endl;
-    cout << "Total Iterations = " << iteration << endl;
+    printf("\n%-10s", "x");
+    for(i = 1; i <= iterations; i++)
+        printf("   y%-8d", i);
+    printf("\n-----------------------------------------------------\n");
+
+    // Picard Iterations
+    for(j = 1; j <= iterations; j++) {
+
+        y[j][0] = y0;                    // y(x0) = y0 for all iterations
+
+        for(i = 1; i <= n; i++) {
+            x = x0 + i * h;
+
+            // Trapezoidal Rule for integration
+            float integral = 0.0;
+            integral += f(x0, y[j-1][0]);               // First term
+
+            for(int k = 1; k < i; k++)
+                integral += 2 * f(x0 + k*h, y[j-1][k]); // Middle terms
+
+            integral += f(x, y[j-1][i]);                // Last term
+
+            integral = integral * (h / 2.0);
+
+            y[j][i] = y0 + integral;
+        }
+    }
+
+    // Print Results
+    for(i = 0; i <= n; i++) {
+        x = x0 + i * h;
+        printf("%-10.4f", x);
+        for(j = 1; j <= iterations; j++) {
+            printf("   %-10.6f", y[j][i]);
+        }
+        printf("\n");
+    }
+
+    printf("\nFinal Approximation after %d iterations:\n", iterations);
+    printf("y(%.4f) â‰ˆ %.8f\n", xn, y[iterations][n]);
 
     return 0;
 }
