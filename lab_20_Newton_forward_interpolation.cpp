@@ -1,3 +1,4 @@
+// Newton Forward Interpolation in C
 #include <stdio.h>
 
 int main() {

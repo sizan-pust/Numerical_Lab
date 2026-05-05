@@ -4,7 +4,7 @@ using namespace std;
 
 // ODE: dy/dx = x - y
 double f(double x, double y) {
-    return x + y;
+    return x - y;
 }
 
 int main() {

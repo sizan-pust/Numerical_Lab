@@ -1,12 +1,96 @@
-//Successive Over-Relaxation (SOR) method for solving linear equations
+// //Successive Over-Relaxation (SOR) method for solving linear equations
+// #include <iostream>
+// #include <iomanip>
+// #include <cmath>
+// using namespace std;
+
+// int main() {
+//     int n;
+//     double tol, omega;
+
+//     cout << "Enter number of equations: ";
+//     cin >> n;
+
+//     double a[20][21], x[20], x_old[20];
+
+//     cout << "Enter augmented matrix coefficients:\n";
+//     for (int i = 0; i < n; i++) {
+//         for (int j = 0; j <= n; j++) {
+//             cin >> a[i][j];
+//         }
+//     }
+
+//     cout << "Enter relaxation factor (omega): ";
+//     cin >> omega;
+
+//     cout << "Enter tolerance: ";
+//     cin >> tol;
+
+//     for (int i = 0; i < n; i++) {
+//         x[i] = 0;
+//         x_old[i] = 0;
+//     }
+
+//     cout << fixed << setprecision(6);
+
+//     cout << "\nIteration";
+//     for (int i = 0; i < n; i++) {
+//         cout << "\tx" << i + 1;
+//     }
+//     cout << "\tError\n";
+
+//     double error = tol + 1.0;
+//     int iter = 0;
+
+//     while (error >= tol) {
+//         for (int i = 0; i < n; i++) {
+//             x_old[i] = x[i];
+//         }
+
+//         for (int i = 0; i < n; i++) {
+//             double sum = a[i][n];
+
+//             for (int j = 0; j < n; j++) {
+//                 if (j != i) {
+//                     sum -= a[i][j] * x[j];
+//                 }
+//             }
+
+//             double gs_value = sum / a[i][i];
+//             x[i] = (1 - omega) * x_old[i] + omega * gs_value;
+//         }
+
+//         error = 0;
+//         for (int i = 0; i < n; i++) {
+//             if (fabs(x[i] - x_old[i]) > error) {
+//                 error = fabs(x[i] - x_old[i]);
+//             }
+//         }
+
+//         iter++;
+//         cout << iter;
+//         for (int i = 0; i < n; i++) {
+//             cout << "\t" << x[i];
+//         }
+//         cout << "\t" << error << endl;
+//     }
+
+//     cout << "\nApproximate solution:\n";
+//     for (int i = 0; i < n; i++) {
+//         cout << "x" << i + 1 << " = " << x[i] << endl;
+//     }
+
+//     return 0;
+// }
+
+// Successive Over-Relaxation (SOR) method for solving linear equations
 #include <iostream>
 #include <iomanip>
-#include <cmath>
 using namespace std;
 
 int main() {
-    int n;
-    double tol, omega;
+    int n, maxIter;
+    double omega;
 
     cout << "Enter number of equations: ";
     cin >> n;
@@ -18,18 +102,15 @@ int main() {
         for (int j = 0; j <= n; j++) {
             cin >> a[i][j];
         }
+         x[i] = 0;
+        x_old[i] = 0;
     }
 
     cout << "Enter relaxation factor (omega): ";
     cin >> omega;
 
-    cout << "Enter tolerance: ";
-    cin >> tol;
-
-    for (int i = 0; i < n; i++) {
-        x[i] = 0;
-        x_old[i] = 0;
-    }
+    cout << "Enter number of iterations: ";
+    cin >> maxIter;
 
     cout << fixed << setprecision(6);
 
@@ -37,12 +118,11 @@ int main() {
     for (int i = 0; i < n; i++) {
         cout << "\tx" << i + 1;
     }
-    cout << "\tError\n";
+    cout << endl;
 
-    double error = tol + 1.0;
     int iter = 0;
 
-    while (error >= tol) {
+    while (iter < maxIter) {
         for (int i = 0; i < n; i++) {
             x_old[i] = x[i];
         }
@@ -57,22 +137,17 @@ int main() {
             }
 
             double gs_value = sum / a[i][i];
+
             x[i] = (1 - omega) * x_old[i] + omega * gs_value;
         }
 
-        error = 0;
-        for (int i = 0; i < n; i++) {
-            if (fabs(x[i] - x_old[i]) > error) {
-                error = fabs(x[i] - x_old[i]);
-            }
-        }
-
         iter++;
+
         cout << iter;
         for (int i = 0; i < n; i++) {
             cout << "\t" << x[i];
         }
-        cout << "\t" << error << endl;
+        cout << endl;
     }
 
     cout << "\nApproximate solution:\n";

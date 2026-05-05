@@ -64,7 +64,7 @@ int main() {
         iter++;
         cout << iter;
         for (int i = 0; i < n; i++) {
-            cout << "\t" << x[i];
+            cout << "\t\t" << x[i];
         }
         cout << "\t" << error << endl;
     }
