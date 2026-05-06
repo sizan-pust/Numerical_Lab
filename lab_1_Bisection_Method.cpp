@@ -5,7 +5,7 @@ using namespace std;
 
 // Define the function here
 double f(double x) {
-    return x*x*x - x - 2;   // predefined function Example: x^3 - x - 2
+    return 3*x+sin(x) - exp(x);   // predefined function Example: x^3 - x - 2
 }
 
 int main() {

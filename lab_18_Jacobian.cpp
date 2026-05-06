@@ -80,64 +80,53 @@
 // }
 
 // Jacobi iteration method for solving linear equations
-#include <iostream>
-#include <iomanip>
-using namespace std;
-
-int main() {
-    int n, maxIter;
-
-    cout << "Enter number of equations: ";
-    cin >> n;
-
-    double a[20][21], x[20], x_old[20];
-
-    cout << "Enter augmented matrix coefficients:\n";
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j <= n; j++) {
-            cin >> a[i][j];
-        }
-         x[i] = 0;
-        x_old[i] = 0;
+#include<stdio.h>
+#include<math.h>
+int main(){
+int n;
+printf("Enter number of equations: ");
+scanf("%d", &n);
+double mat[n][n+1], x_old[n], x_new[n];
+printf("Enter the augmented matrix: \n");
+for(int i=0;i<n;i++){
+    for(int j=0;j<=n;j++){
+        scanf("%lf", &mat[i][j]);
     }
-    cout << "Enter number of iterations: ";
-    cin >> maxIter;
+    x_old[i] = 0; // Initial guess
+    x_new[i] = 0;
+}
+int maxitr;
+printf("Enter the iterations: ");
 
-    cout << fixed << setprecision(6);
-    cout << "\nIteration\t";
-    for (int i = 0; i < n; i++) {
-        cout << "x" << i + 1<<"\t\t";
+scanf("%d", &maxitr);
+int itr=0;
+printf("\nIteration\t: ");
+for(int i=0;i<n;i++){   
+    printf("x%d \t\t", i+1);
+}
+printf("\n");  
+while(itr<maxitr){
+    for(int i=0;i<n;i++){
+        x_old[i] = x_new[i];
     }
-    cout << endl;
-
-    int iter = 0;
-
-    while (iter < maxIter) {
-        for (int i = 0; i < n; i++) {
-            x_old[i] = x[i];
-        }
-iter++;
-
-        cout << iter<<"\t\t";
-        for (int i = 0; i < n; i++) {
-            double sum = a[i][n];
-
-            for (int j = 0; j < n; j++) {
-                if (j != i) {
-                    sum -= a[i][j] * x_old[j];
-                }
+    itr++;
+    printf("%d\t\t: ", itr);
+    for(int i=0;i<n;i++){
+        double sum = mat[i][n]; // Start with the constant term
+        for(int j=0;j<n;j++){
+            if(j!=i){
+                sum  -= mat[i][j]*x_old[j]; // Subtract the contributions of other variables
             }
-
-            x[i] = sum / a[i][i];
-            cout  << x[i]<<"\t";
         }
-        cout << endl;
+        x_new[i] = sum / mat[i][i]; // Update the new value for variable i 
+        printf("%lf \t", x_new[i]);
     }
-
-    cout << "\nApproximate solution:\n";
-    for (int i = 0; i < n; i++) {
-        cout << "x" << i + 1 << " = " << x[i] << endl;
-    }
+    printf("\n");
+}
+printf("\nApproximate solution:\n");
+for(int i=0;i<n;i++){   
+    printf("x%d = %lf\n", i+1, x_new[i]);
+}
 
     return 0;
 }

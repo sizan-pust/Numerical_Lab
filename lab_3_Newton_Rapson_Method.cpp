@@ -4,12 +4,12 @@ using namespace std;
 
 // Define the function
 double f(double x) {
-    return x*x*x - x - 2;   // predefined function Example: x^3 - x - 2
+     return 3*x+sin(x) - exp(x); // predefined function Example: x^3 - x - 2
 }
 
 // Define derivative of the function
 double df(double x) {
-    return 3*x*x - 1;       // Derivative: 3x^2 - 1
+    return 3+cos(x) - exp(x);       // Derivative: 3x^2 - 1
 }
 
 int main() {
@@ -30,7 +30,7 @@ int main() {
             return 0;
         }
 
-        x1 = x0 - f(x0) / df(x0);
+        x1 = x0 - (f(x0) / df(x0));
         iteration++;
 
         cout << iteration << "\t\t"
